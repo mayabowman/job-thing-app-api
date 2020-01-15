@@ -2,7 +2,7 @@
 * hasUserWithEmail()
 * addUser()
 * validatePassword()
-* hashPassword
+* hashPassword()
 * serializeUser()
 
 ## Users router
@@ -31,7 +31,7 @@ route('/login')
 * deleteJob()
 
 ## Job router
-route('/)
+route('/')
 * .get()
 * .post()
 
