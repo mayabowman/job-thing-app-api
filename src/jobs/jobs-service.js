@@ -1,7 +1,7 @@
 const JobsService = {
   // getAllJobs()
 
-  getJobByUserId(db, user_id) {
+  getJobsByUserId(db, user_id) {
     return db
       .from('job_thing_jobs')
       .select('*')
