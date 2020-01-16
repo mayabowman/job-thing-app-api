@@ -10,7 +10,7 @@ route('/')
 * .post()
 
 ## Auth service
-* getUserWithEmail()
+* getUserByEmail()
 * comparePasswords()
 * createJwt()
 * verifyJwt()
@@ -23,14 +23,14 @@ route('/login')
 ## Middleware
 * jwt-auth
 
-## Job service
+## Jobs service
 * getAllJobs()
 * getJobById()
 * postJob()
 * updateJob()
 * deleteJob()
 
-## Job router
+## Jobs router
 route('/')
 * .get()
 * .post()
