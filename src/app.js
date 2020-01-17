@@ -18,7 +18,7 @@ app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
 
-app.use('/api/login', authRouter)
+app.use('/api/auth', authRouter)
 app.use('/api/jobs', jobsRouter)
 app.use('/api/users', usersRouter)
 
