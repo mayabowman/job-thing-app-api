@@ -20,6 +20,7 @@ app.use(cors())
 
 app.use('/api/auth', authRouter)
 app.use('/api/jobs', jobsRouter)
+app.use('/api/jobs/user', jobsRouter)
 app.use('/api/users', usersRouter)
 
 app.get('/', (req, res) => {
