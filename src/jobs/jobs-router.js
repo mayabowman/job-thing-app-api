@@ -6,13 +6,13 @@ const bodyParser = express.json()
 
 jobsRouter
   .route('/')
-  .get((req, res, next) => {
-    JobsService.getJobsByUserId(req.app.get('db'))
-      .then(jobs => {
-        res.json(jobs)
-      })
-      .catch(next)
-  })
+  // .get((req, res, next) => {
+  //   JobsService.getJobsByUserId(req.app.get('db'), user_id)
+  //     .then(jobs => {
+  //       res.json(jobs)
+  //     })
+  //     .catch(next)
+  // })
   .post(requireAuth, bodyParser, (req, res, next) => {
     const { user_id, company, position, description, date_submitted, status } = req.body
     const newJob = { user_id, company, position, description, date_submitted, status }
@@ -71,5 +71,15 @@ jobsRouter
       })
       .catch(next)
   })
+
+  jobsRouter
+    .route('/jobs/user/:user_id')
+    .get((req, res, next) => {
+      JobsService.getJobsByUserId(req.app.get('db'), user_id)
+        .then(jobs => {
+          res.json(jobs)
+        })
+        .catch(next)
+    })
 
 module.exports = jobsRouter;
