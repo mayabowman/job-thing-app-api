@@ -7,7 +7,6 @@ const { NODE_ENV, CLIENT_ORIGIN } = require('./config')
 const authRouter = require('./auth/auth-router')
 const jobsRouter = require('./jobs/jobs-router')
 const usersRouter = require('./users/users-router')
-const userJobsRouter = require('./jobs/user-jobs-router')
 
 const app = express()
 
@@ -21,7 +20,6 @@ app.use(cors())
 
 app.use('/api/auth', authRouter)
 app.use('/api/jobs', jobsRouter)
-app.use('/api/jobs/user', userJobsRouter)
 app.use('/api/users', usersRouter)
 
 app.get('/', (req, res) => {
