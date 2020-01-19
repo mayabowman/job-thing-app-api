@@ -31,6 +31,16 @@ jobsRouter
   })
 
 jobsRouter
+  .route('/jobs/user/:user_id')
+  .get((req, res, next) => {
+    JobsService.getJobsByUserId(req.app.get('db'), user_id)
+      .then(jobs => {
+        res.json(jobs)
+      })
+      .catch(next)
+  })
+
+jobsRouter
   .route('/:job_id')
   .all((req, res, next) => {
     JobsService.getJobById(req.app.get('db'), req.params.job_id)
@@ -72,14 +82,6 @@ jobsRouter
       .catch(next)
   })
 
-  jobsRouter
-    .route('/jobs/user/:user_id')
-    .get((req, res, next) => {
-      JobsService.getJobsByUserId(req.app.get('db'), user_id)
-        .then(jobs => {
-          res.json(jobs)
-        })
-        .catch(next)
-    })
+
 
 module.exports = jobsRouter;
