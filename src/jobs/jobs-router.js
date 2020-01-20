@@ -7,6 +7,7 @@ const bodyParser = express.json()
 jobsRouter
   .route('/')
   .post(requireAuth, bodyParser, (req, res, next) => {
+    console.log('req.body', req.body)
     const { user_id, company, position, description, date_submitted, status } = req.body
     const newJob = { user_id, company, position, description, date_submitted, status }
 
