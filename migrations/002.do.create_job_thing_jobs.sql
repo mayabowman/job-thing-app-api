@@ -4,6 +4,7 @@ CREATE TABLE job_thing_jobs (
   company TEXT NOT NULL,
   position TEXT NOT NULL,
   description TEXT NOT NULL,
+  status TEXT NOT NULL,
   date_submitted TEXT NOT NULL,
   date_created TIMESTAMP DEFAULT now() NOT NULL
 );
