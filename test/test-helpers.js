@@ -49,8 +49,24 @@ function seedUsers(users) {
   return preppedUsers
 }
 
+function seedTables(db, jobs) {
+  return db
+    .into('job_thing_jobs')
+    .insert([jobs])
+}
+
+function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+  const token = jwt.sign({ user_id: user.id }, secret, {
+    subject: user.user_name,
+    algorithm: 'HS256',
+  })
+  return `Bearer ${token}`
+}
+
 module.exports = {
   makeUsersArray,
   seedUsers,
-  makeJobsArray
+  makeJobsArray,
+  seedTables,
+  makeAuthHeader
 };
