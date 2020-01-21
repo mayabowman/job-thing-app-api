@@ -2,7 +2,7 @@ const knex = require('knex');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const app = require('../src/app');
-const { makeUsersArray } = require('./auth-fixtures');
+const { makeUsersArray } = require('./test-helpers');
 
 function seedUsers(users) {
   const preppedUsers = users.map((user) => ({
@@ -47,11 +47,11 @@ describe('Auth Endpoints', () => {
 
     it('responds 200 and JWT auth token using secret when valid credentials', () => {
       const userValidCreds = {
-        user_name: testUsers[0].user_name,
-        password: testUsers[0].password
+        user_name: testUser.user_name,
+        password: testUser.password
       };
       const expectedToken = jwt.sign(
-        { user_id: testUsers[0].id },
+        { user_id: testUser.id },
         process.env.JWT_SECRET,
         {
           subject: testUser.user_name,
