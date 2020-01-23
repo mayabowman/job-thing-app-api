@@ -46,7 +46,7 @@ describe('Users Endpoints', function() {
 
   afterEach('clean the table', () => db.raw(`TRUNCATE job_thing_jobs, job_thing_users RESTART IDENTITY CASCADE`));
 
-  describe(`POST /api/users`, () => {
+  describe.only(`POST /api/users`, () => {
     context(`Happy path`, () => {
       it(`responds 201, serialized user, storing bcryped password`, () => {
         const newUser = {

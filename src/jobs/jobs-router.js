@@ -3,6 +3,7 @@ const JobsService = require('./jobs-service')
 const { requireAuth } = require('../middleware/jwt-auth')
 const jobsRouter = express.Router()
 const bodyParser = express.json()
+const UsersService = require('../users/users-service')
 
 jobsRouter
   .route('/')
@@ -16,20 +17,34 @@ jobsRouter
       return res.status(400).json({
         error: { message: `Missing '${key}' in request body` }
       })
-
+      console.log('going to post the job', newJob)
     JobsService.postJob(req.app.get('db'), newJob)
       .then(job => {
+        console.log('success!')
         res.status(201).send(newJob)
       })
-      .catch(next)
+      .catch((error) => {
+        console.log('failure', error)
+
+        next(error)
+
+
+      })
   })
 
 jobsRouter
   .route('/user/:user_id')
   .get((req, res, next) => {
-    JobsService.getJobsByUserId(req.app.get('db'), req.params.user_id)
-      .then(jobs => {
-        res.json(jobs)
+    console.log('here!', req.params)
+    UsersService.getUserById(req.app.get('db'), req.params.user_id)
+      .then((user) => {
+        if (!user) {
+          return res.sendStatus(404)
+        }
+        return JobsService.getJobsByUserId(req.app.get('db'), req.params.user_id)
+          .then(jobs => {
+          res.json(jobs)
+        })
       })
       .catch(next)
   })

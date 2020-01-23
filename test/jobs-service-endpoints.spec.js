@@ -74,7 +74,7 @@ describe(`Jobs service object`, function() {
         return supertest(app)
           .get(`api/jobs/user/${testUserId}`)
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
-          .expect(200, testJob)
+          .expect(200, testJobs)
       })
     })
   })
@@ -87,7 +87,7 @@ describe(`Jobs service object`, function() {
         return supertest(app)
           .get(`/api/jobs/${jobId}`)
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
-          .expect(404, { mesage: "Job does not exist"})
+          .expect(404, { message: "Job does not exist"})
       })
     })
     context('Given there are jobs in the database', () => {
