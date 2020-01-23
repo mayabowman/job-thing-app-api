@@ -8,21 +8,21 @@ describe('Users Endpoints', function() {
 
   let testUsers = [
     {
-      id: 1,
+      // id: 1,
       user_name: 'kpassarella',
       full_name: 'Kenda Passarella',
       password: 'password',
       date_created: '2029-01-22T16:28:32.615Z'
     },
     {
-      id: 2,
+      // id: 2,
       user_name: 'dexner',
       full_name: 'Desmond Exner',
       password: 'password',
       date_created: '2029-01-22T16:28:32.615Z'
     },
     {
-      id: 3,
+      // id: 3,
       user_name: 'mghere',
       full_name: 'Marcie Ghere',
       password: 'password',
@@ -40,7 +40,7 @@ describe('Users Endpoints', function() {
 
   after('disconnect from db', () => db.destroy());
 
-  beforeEach('clean the table', () => db.raw(`TRUNCATE job_thing_jobs, job_thing_users RESTART IDENTITY CASCADE`));
+  before('clean the table', () => db.raw(`TRUNCATE job_thing_jobs, job_thing_users RESTART IDENTITY CASCADE`));
 
   before('insert users', () => db.into('job_thing_users').insert(testUsers));
 
@@ -59,7 +59,7 @@ describe('Users Endpoints', function() {
           .set('Content-Type', 'application/json')
           .set('Authorization', helpers.makeAuthHeader(newUser))
           .send(newUser)
-          // .expect(201)
+          .expect(201)
           .expect(res => {
             expect(res.body).to.have.property('id')
             expect(res.body.user_name).to.eql(newUser.user_name)
