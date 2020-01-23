@@ -5,8 +5,10 @@ const helpers = require('./test-helpers');
 describe(`Jobs service object`, function() {
   let db
 
-  const { testUsers } = helpers.makeUsersArray();
-  const { testJobs } = helpers.makeJobsArray();
+  const testUsers = helpers.makeUsersArray();
+  const testJobs = helpers.makeJobsArray();
+  console.log('testUsers', testUsers)
+  console.log('testJobs', testJobs)
 
   before('make knex instance', () => {
     db = knex({
@@ -47,6 +49,8 @@ describe(`Jobs service object`, function() {
       }
       return supertest(app)
         .post('/api/jobs')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
         .send(newJob)
         .expect(201)
     })
