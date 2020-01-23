@@ -86,7 +86,7 @@ jobsRouter
   .delete(requireAuth, (req, res, next) => {
     JobsService.deleteJob(req.app.get('db'), req.params.job_id)
       .then(job => {
-        res.status(201).end()
+        res.status(204).end()
       })
       .catch(next)
   })

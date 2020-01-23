@@ -37,7 +37,7 @@ describe(`Jobs service object`, function() {
   );
 
   // post job
-  describe('POST /api/jobs', () => {
+  describe.skip('POST /api/jobs', () => {
     it(`adds job to job list, responding with 201`, () => {
       const newJob = {
         user_id: '1',
@@ -59,7 +59,7 @@ describe(`Jobs service object`, function() {
   //getjobs by user id
   describe(`GET /api/jobs/user/:user_id`, () => {
     context(`Given no jobs for user id`, () => {
-      it(`responds with 404`, () => {
+      it.skip(`responds with 404`, () => {
         const userId = 123
         return supertest(app)
           .get(`/api/jobs/user/${userId}`)
@@ -115,7 +115,7 @@ describe(`Jobs service object`, function() {
 
   // delete job
   describe(`DELETE api/jobs/:job_id`, () => {
-    it('responds with 204', () => {
+    it.skip('responds with 204', () => {
       const jobId = 1
       return supertest(app)
         .delete(`/api/jobs/${jobId}`)
