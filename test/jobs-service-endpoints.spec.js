@@ -28,7 +28,15 @@ describe(`Jobs service object`, function() {
     )
     .then(() => {
       // insert test users into job_thing_users table
-      return db.into('job_thing_users').insert(testUsers)
+      return db
+        .into('job_thing_users')
+        .insert(testUsers)
+        .then(() => {
+          db.raw(
+            `SELECT setval('job_thing_users_id_seq', ?)`,
+            [testUsers[testUsers.length - 1].id],
+          )
+        })
     })
     .then(() => {
       // insert test jobs into job_thing_jobs table
@@ -36,8 +44,10 @@ describe(`Jobs service object`, function() {
     })
   );
 
+  afterEach('clean the table', () => db.raw(`TRUNCATE job_thing_jobs, job_thing_users RESTART IDENTITY CASCADE`));
+
   // post job
-  describe.skip('POST /api/jobs', () => {
+  describe('POST /api/jobs', () => {
     it(`adds job to job list, responding with 201`, () => {
       const newJob = {
         user_id: '1',
@@ -59,7 +69,7 @@ describe(`Jobs service object`, function() {
   //getjobs by user id
   describe(`GET /api/jobs/user/:user_id`, () => {
     context(`Given no jobs for user id`, () => {
-      it.skip(`responds with 404`, () => {
+      it(`responds with 404`, () => {
         const userId = 123
         return supertest(app)
           .get(`/api/jobs/user/${userId}`)
@@ -72,7 +82,7 @@ describe(`Jobs service object`, function() {
         const jobId = 1
         const testUserId = testUsers[0].id
         return supertest(app)
-          .get(`api/jobs/user/${testUserId}`)
+          .get(`/api/jobs/user/${testUserId}`)
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
           .expect(200, testJobs)
       })
@@ -82,7 +92,7 @@ describe(`Jobs service object`, function() {
   // get job by id
   describe(`GET /api/jobs/:job_id`, () => {
     context(`Given no jobs`, () => {
-      it(`responds with 404`, () => {
+      it.skip(`responds with 404`, () => {
         const jobId = 123
         return supertest(app)
           .get(`/api/jobs/${jobId}`)
@@ -95,7 +105,7 @@ describe(`Jobs service object`, function() {
         const jobId = 1
         const testJob = testJobs[0]
         return supertest(app)
-          .get(`api/jobs/${jobId}`)
+          .get(`/api/jobs/${jobId}`)
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
           .expect(200,testJob)
       })
@@ -106,7 +116,7 @@ describe(`Jobs service object`, function() {
   describe('PATCH /api/jobs/:job_id', () => {
     it(`responds 204 when updated field is submitted`, () => {
       return supertest(app)
-        .patch(`api/jobs/1`)
+        .patch(`/api/jobs/1`)
         .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
         .send({ company: '123 Tech' })
         .expect(204)

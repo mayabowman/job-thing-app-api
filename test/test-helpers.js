@@ -30,14 +30,14 @@ function makeUsersArray() {
 function makeJobsArray() {
   return [
     {
-      // id: 99,
+      // id: 1,
       user_id: 1,
       company: 'IBM',
       position: 'Front End Developer',
       description: 'Test description',
       status: 'Application submitted',
       date_submitted: '11/01/2019',
-      date_created: new Date('2029-01-22T16:28:32.615Z')
+      date_created: '2029-01-22T16:28:32.615Z'
     }
   ]
 }
