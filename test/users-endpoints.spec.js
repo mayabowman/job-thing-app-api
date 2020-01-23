@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const app = require('../src/app')
 const helpers = require('./test-helpers')
 
-describe.only('Users Endpoints', function() {
+describe('Users Endpoints', function() {
   let db
 
   let testUsers = [
@@ -42,7 +42,7 @@ describe.only('Users Endpoints', function() {
 
   beforeEach('clean the table', () => db.raw(`TRUNCATE job_thing_jobs, job_thing_users RESTART IDENTITY CASCADE`));
 
-  beforeEach('insert users', () => db.into('job_thing_users').insert(testUsers));
+  before('insert users', () => db.into('job_thing_users').insert(testUsers));
 
   afterEach('clean the table', () => db.raw(`TRUNCATE job_thing_jobs, job_thing_users RESTART IDENTITY CASCADE`));
 
@@ -61,7 +61,6 @@ describe.only('Users Endpoints', function() {
           .send(newUser)
           // .expect(201)
           .expect(res => {
-            console.log('res.body', res.body)
             expect(res.body).to.have.property('id')
             expect(res.body.user_name).to.eql(newUser.user_name)
             expect(res.body.full_name).to.eql(newUser.full_name)
