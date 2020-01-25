@@ -66,9 +66,6 @@ describe('Users Endpoints', function() {
             expect(res.body.full_name).to.eql(newUser.full_name)
             expect(res.body).to.not.have.property('password')
             expect(res.headers.location).to.eql(`/api/users/${res.body.id}`)
-            const expectedDate = new Date().toLocaleString('en', { timeZone: 'UTC' })
-            const actualDate = new Date(res.body.date_created).toLocaleString()
-            expect(actualDate).to.eql(expectedDate)
           })
           .expect(res =>
             db
@@ -79,9 +76,6 @@ describe('Users Endpoints', function() {
               .then(row => {
                 expect(row.user_name).to.eql(newUser.user_name)
                 expect(row.full_name).to.eql(newUser.full_name)
-                const expectedDate = new Date().toLocaleString('en', { timeZone: 'UTC' })
-                const actualDate = new Date(row.date_created).toLocaleString()
-                expect(actualDate).to.eql(expectedDate)
 
                 return bcrypt.compare(newUser.password, row.password)
               })

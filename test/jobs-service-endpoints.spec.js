@@ -20,7 +20,7 @@ describe(`Jobs service object`, function() {
 
  after('disconnect from db', () => db.destroy());
 
- before('clean the table', () => db.raw(
+ beforeEach('clean the table', () => db.raw(
   `TRUNCATE
     job_thing_jobs,
     job_thing_users
@@ -52,17 +52,18 @@ describe(`Jobs service object`, function() {
   })
  );
 
+
  // post job
  describe('POST /api/jobs', () => {
   it(`adds job to job list, responding with 201`, () => {
     const newJob = {
-    user_id: '1',
-    company: 'Tech Company',
-    position: 'Front End Developer',
-    status: 'Application submitted',
-    description: 'Test description',
-    date_submitted: '11/01/2019'
-  }
+      user_id: 1,
+      company: 'IBM',
+      position: 'Front End Developer',
+      status: 'Application submitted',
+      description: 'Test description',
+      date_submitted: '11/01/2019'
+    }
   return supertest(app)
     .post('/api/jobs')
     .set('Content-Type', 'application/json')
@@ -87,6 +88,7 @@ describe(`Jobs service object`, function() {
       it('responds with 200 and the specified job', () => {
         const jobId = 1
         const testUserId = testUsers[0].id
+        testJobs[0].id = 1
         return supertest(app)
           .get(`/api/jobs/user/${testUserId}`)
           .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
