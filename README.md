@@ -1,4 +1,4 @@
-# Bookery API
+# Job Thing API
 
 This RESTful API controls all interactions between the front end Job Thing app and the database.
 
