@@ -20,7 +20,7 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   return `bearer ${token}`
 }
 
-describe.skip('Auth Endpoints', () => {
+describe('Auth Endpoints', () => {
   let db;
   const testUsers = makeUsersArray();
   const testUser = testUsers[0];
