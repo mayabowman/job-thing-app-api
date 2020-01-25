@@ -8,7 +8,6 @@ const UsersService = require('../users/users-service')
 jobsRouter
   .route('/')
   .post(requireAuth, bodyParser, (req, res, next) => {
-    console.log('req.body', req.body)
     const { user_id, company, position, description, date_submitted, status } = req.body
     const newJob = { user_id, company, position, description, date_submitted, status }
 
@@ -17,25 +16,18 @@ jobsRouter
       return res.status(400).json({
         error: { message: `Missing '${key}' in request body` }
       })
-      console.log('going to post the job', newJob)
     JobsService.postJob(req.app.get('db'), newJob)
       .then(job => {
-        console.log('success!')
         res.status(201).send(newJob)
       })
       .catch((error) => {
-        console.log('failure', error)
-
         next(error)
-
-
       })
   })
 
 jobsRouter
   .route('/user/:user_id')
   .get((req, res, next) => {
-    console.log('here!', req.params)
     UsersService.getUserById(req.app.get('db'), req.params.user_id)
       .then((user) => {
         if (!user) {
